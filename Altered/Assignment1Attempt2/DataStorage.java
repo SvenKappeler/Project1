@@ -30,14 +30,15 @@ public class DataStorage {
                     String name = (String) obj.get("name");
                     double latitude = (double) obj.get("latitude");
                     double longitude = (double) obj.get("longitude");
-                    Business business = new Business(businessId, name, latitude, longitude);
+                    double stars = (Double) obj.get("stars");
                     String catagories = (String) obj.get("categories");
 
                     if (catagories.contains("Restaurants")) {
                         // add the Business object to the hashtable
+                        Business business = new Business(businessId, name, latitude, longitude, stars);
                         businesses.add(business.getBusinessId(), business);
                         // A sysout for printing all business id name lat and long
-                        System.out.println(business.getBusinessId() + " " + business.getName() + " " + business.getLatitude() + " " + business.getLongitude());
+                        //System.out.println(business.getBusinessId() + " " + business.getName() + " " + business.getLatitude() + " " + business.getLongitude());
                         //increment counter
                         restaurantCounter ++;
                     } else {
@@ -48,7 +49,7 @@ public class DataStorage {
                     
                 }
             }
-            System.out.println(restaurantCounter);
+            //System.out.println(restaurantCounter);
         }
     }
 
@@ -68,18 +69,18 @@ public class DataStorage {
                 //System.out.println(businessId);
                 String reviewId = (String) obj.get("review_id");
                 String text = (String) obj.get("text");
-                double Stars = (Double) obj.get("stars");
+                
 
-                Business temp = new Business(businessId, reviewId, 0, 0);
+                Business temp = new Business(businessId, reviewId, 0, 0,0);
                 
                 if (businesses.contains(businessId)) {
-                    System.out.println("Business found");
+                    //System.out.println("Business found");
                     Business business = businesses.get(temp.getBusinessId());
                     if (business != null) {
-                        System.out.println(business.getBusinessId());
+                        //System.out.println(business.getBusinessId());
                         business.addReview(text);
                         business.increaseReviewCount();
-                        System.out.print("Review added to business: " + businessId);
+                        //System.out.print("Review added to business: " + businessId);
                     } else {
                         //System.out.println("Business is null");
                     }

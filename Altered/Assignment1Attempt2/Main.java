@@ -10,7 +10,7 @@ public class Main {
         DataStorage.parseBusinessesJSON(businesses);
         System.out.println("Done with the");
         DataStorage.addReviewToBusiness(businesses);
-        System.out.println(businesses.getCount());
+        //System.out.println(businesses.getCount());
         businesses.printAllBusinesses();
         System.out.println("Done");
 

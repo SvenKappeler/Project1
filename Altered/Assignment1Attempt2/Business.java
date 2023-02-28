@@ -3,11 +3,11 @@ public class Business {
     private String name;
     private double longitude;
     private double latitude;
-    private int stars;
+    private double stars;
     private String reviews;
     private int reviewCount; 
 
-    public Business(String business_id, String name, double longitude, double latitude){
+    public Business(String business_id, String name, double longitude, double latitude, double stars){
         this.business_id = business_id;
         this.name = name;
         this.longitude = longitude;
@@ -15,6 +15,7 @@ public class Business {
         this.stars = 0;
         this.reviews = "";
         this.reviewCount = 0;
+        this.stars = stars;
     }
 
     public String getBusinessId(){
@@ -32,12 +33,10 @@ public class Business {
     public double getLatitude(){
         return latitude;
     }
-    public int getStars(){
+    public double getStars(){
         return stars;
     }
-    public void setStars(int stars){
-        this.stars = stars;
-    }
+
     public void addReview(String text){
         reviews.concat(text);
     }

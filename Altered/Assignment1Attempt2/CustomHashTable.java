@@ -110,12 +110,12 @@ class CustomHashTable implements java.io.Serializable {
         int h = key.hashCode();
         int i = h & (table.length - 1);
         for (Node e = table[i]; e != null; e = e.next) {
-            System.out.println(key);
-            System.out.println(e.key);
+            //System.out.println(key);
+            //System.out.println(e.key);
             String key1 = (String) key;
             String key2 = (String) e.key;
-            System.out.println(key1.equals(key2));
-            System.out.println(e.value);
+            //System.out.println(key1.equals(key2));
+            //System.out.println(e.value);
             if (key1.equals(key2)) {
                 return (Business) e.value;
             }
@@ -128,7 +128,7 @@ class CustomHashTable implements java.io.Serializable {
         for (int i = 0; i < table.length; ++i) {
             for (Node e = table[i]; e != null; e = e.next) {
                 if (e.value != null) {
-                    System.out.println(e.value.getName() + " " + e.value.getReviewCount());
+                    System.out.println(e.value.getName() + " " + e.value.getReviewCount() + " " + e.value.getStars());
                 }
             }
         }
@@ -137,4 +137,5 @@ class CustomHashTable implements java.io.Serializable {
     public int getCount(){
         return size;
     }
+
 }
