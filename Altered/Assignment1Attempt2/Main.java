@@ -6,6 +6,7 @@ import com.google.gson.JsonSyntaxException;
 public class Main {
     public static void main(String[] args) throws JsonSyntaxException, IOException {
         // Initialize the data store with Yelp dataset records
+        new GUI();
         CustomHashTable businesses = new CustomHashTable();
         DataStorage.parseBusinessesJSON(businesses);
         System.out.println("Done with the");
@@ -13,6 +14,7 @@ public class Main {
         //System.out.println(businesses.getCount());
         businesses.printAllBusinesses();
         System.out.println("Done");
+
 
         //CustomHashTable reviews = new CustomHashTable();
         //DataStorage.parseReviewsJSON(reviews);

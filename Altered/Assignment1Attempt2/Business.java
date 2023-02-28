@@ -13,7 +13,7 @@ public class Business {
         this.longitude = longitude;
         this.latitude = latitude;
         this.stars = 0;
-        this.reviews = "";
+        this.reviews = " ";
         this.reviewCount = 0;
         this.stars = stars;
     }
@@ -38,7 +38,7 @@ public class Business {
     }
 
     public void addReview(String text){
-        reviews.concat(text);
+        reviews += text;
     }
     public String getReviews(){
         return reviews;

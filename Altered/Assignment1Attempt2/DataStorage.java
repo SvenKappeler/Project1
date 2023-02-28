@@ -78,6 +78,7 @@ public class DataStorage {
                     Business business = businesses.get(temp.getBusinessId());
                     if (business != null) {
                         //System.out.println(business.getBusinessId());
+                        System.out.println(text);
                         business.addReview(text);
                         business.increaseReviewCount();
                         //System.out.print("Review added to business: " + businessId);
