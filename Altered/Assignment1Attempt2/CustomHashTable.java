@@ -32,7 +32,6 @@ class CustomHashTable implements java.io.Serializable {
 
         table[i] = new Node(key, value, table[i]);
         ++size;
-        System.out.println(value);
         if ((float)size/table.length >= 0.75f){
             resize();
         }
@@ -110,12 +109,8 @@ class CustomHashTable implements java.io.Serializable {
         int h = key.hashCode();
         int i = h & (table.length - 1);
         for (Node e = table[i]; e != null; e = e.next) {
-            //System.out.println(key);
-            //System.out.println(e.key);
             String key1 = (String) key;
             String key2 = (String) e.key;
-            //System.out.println(key1.equals(key2));
-            //System.out.println(e.value);
             if (key1.equals(key2)) {
                 return (Business) e.value;
             }
