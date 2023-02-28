@@ -31,14 +31,20 @@ public class DataStorage {
                     double latitude = (double) obj.get("latitude");
                     double longitude = (double) obj.get("longitude");
                     Business business = new Business(businessId, name, latitude, longitude);
-                
-                    // add the Business object to the hashtable
-                    businesses.add(business.getBusinessId(), business);
-                    // A sysout for printing all business id name lat and long
-                    System.out.println(business.getBusinessId() + " " + business.getName() + " " + business.getLatitude() + " " + business.getLongitude());
+                    String catagories = (String) obj.get("categories");
 
-                    //increment counter
-                    restaurantCounter ++;
+                    if (catagories.contains("Restaurants")) {
+                        // add the Business object to the hashtable
+                        businesses.add(business.getBusinessId(), business);
+                        // A sysout for printing all business id name lat and long
+                        System.out.println(business.getBusinessId() + " " + business.getName() + " " + business.getLatitude() + " " + business.getLongitude());
+                        //increment counter
+                        restaurantCounter ++;
+                    } else {
+                        //System.out.println("Business is not a restaurant");
+                    }
+                
+
                     
                 }
             }
@@ -62,6 +68,7 @@ public class DataStorage {
                 //System.out.println(businessId);
                 String reviewId = (String) obj.get("review_id");
                 String text = (String) obj.get("text");
+                double Stars = (Double) obj.get("stars");
 
                 Business temp = new Business(businessId, reviewId, 0, 0);
                 
