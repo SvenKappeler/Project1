@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
@@ -10,7 +11,7 @@ public class DataStorage {
 
     public static void parseBusinessesJSON(CustomHashTable businesses) throws JsonSyntaxException, IOException{
         // Parse information 
-        String filename = "yelp_academic_dataset_business.json";
+        String filename = "/Users/svenkappeler/Downloads/yelp_dataset/yelp_academic_dataset_business.json";
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             int restaurantCounter = 0;
@@ -32,23 +33,24 @@ public class DataStorage {
                     Business business = new Business(businessId, name, latitude, longitude);
                 
                     // add the Business object to the hashtable
-                    businesses.add(business);
+                    businesses.add(business.getBusinessId(), business);
+                    // A sysout for printing all business id name lat and long
+                    System.out.println(business.getBusinessId() + " " + business.getName() + " " + business.getLatitude() + " " + business.getLongitude());
 
                     //increment counter
                     restaurantCounter ++;
                     
                 }
             }
+            System.out.println(restaurantCounter);
         }
     }
 
-    public static void parseReviewsJSON(CustomHashTable reviews) throws JsonSyntaxException, IOException{
-        // Parse information 
-        String filename = "yelp_academic_dataset_review.json";
+    public static void addReviewToBusiness(CustomHashTable businesses) throws FileNotFoundException, IOException{
+        // for each business
+        String filename = "/Users/svenkappeler/Downloads/yelp_dataset/yelp_academic_dataset_review.json";
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
-            int ree = 0;
-
             // no limit on reviews
             while((line = br.readLine()) != null)
             {        
@@ -57,18 +59,30 @@ public class DataStorage {
                 
                 // create a new Business object from the Map
                 String businessId = (String) obj.get("business_id");
+                //System.out.println(businessId);
                 String reviewId = (String) obj.get("review_id");
                 String text = (String) obj.get("text");
-                Review review = new Review(businessId, reviewId, text);
+
+                Business temp = new Business(businessId, reviewId, 0, 0);
                 
-                // add the Business object to the hashtable
-                reviews.add(businessId);
-                ree ++;
+                if (businesses.contains(businessId)) {
+                    System.out.println("Business found");
+                    Business business = businesses.get(temp.getBusinessId());
+                    if (business != null) {
+                        System.out.println(business.getBusinessId());
+                        business.addReview(text);
+                        business.increaseReviewCount();
+                        System.out.print("Review added to business: " + businessId);
+                    } else {
+                        //System.out.println("Business is null");
+                    }
+                } else {
+                    //System.out.println("Business not found");
+                }             
             }
-            System.out.println("Christopher Icenhour, there are: " + ree + " reviews in this program.");
         }
     }
-        
 }
+
 
 

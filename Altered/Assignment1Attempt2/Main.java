@@ -8,9 +8,14 @@ public class Main {
         // Initialize the data store with Yelp dataset records
         CustomHashTable businesses = new CustomHashTable();
         DataStorage.parseBusinessesJSON(businesses);
+        System.out.println("Done with the");
+        DataStorage.addReviewToBusiness(businesses);
+        System.out.println(businesses.getCount());
+        businesses.printAllBusinesses();
+        System.out.println("Done");
 
-        CustomHashTable reviews = new CustomHashTable();
-        DataStorage.parseReviewsJSON(reviews);
+        //CustomHashTable reviews = new CustomHashTable();
+        //DataStorage.parseReviewsJSON(reviews);
         //businesses.printAll();
         //CustomHashTableReviews reviews = new CustomHashTableReviews();
         //DataStorage.parseJSON(reviews);

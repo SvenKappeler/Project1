@@ -4,10 +4,9 @@ class CustomHashTable implements java.io.Serializable {
 
     static final class Node {
 	    Object key;
+        Business value;
         Node next;
-        // int count;
-        // Object value;
-        Node(Object k, Node n) { key = k; next = n; }
+        Node(Object k, Business value, Node n) { key = k; this.value = value; next = n; }
     }
 
     Node[] table = new Node[8]; // always a power of 2
@@ -23,7 +22,7 @@ class CustomHashTable implements java.io.Serializable {
         return false;
     }
 
-    void add(Object key) {
+    void add(Object key, Business value) {
         int h = key.hashCode();
         int i = h & (table.length - 1);
         for (Node e = table[i]; e != null; e = e.next) {
@@ -31,8 +30,9 @@ class CustomHashTable implements java.io.Serializable {
             return;
         }
 
-        table[i] = new Node(key, table[i]);
+        table[i] = new Node(key, value, table[i]);
         ++size;
+        System.out.println(value);
         if ((float)size/table.length >= 0.75f){
             resize();
         }
@@ -47,7 +47,7 @@ class CustomHashTable implements java.io.Serializable {
             for (Node e = oldTable[i]; e != null; e = e.next) {
             int h = e.key.hashCode();
             int j = h & (newTable.length - 1);
-            newTable[j] = new Node(e.key, newTable[j]);
+            newTable[j] = new Node(e.key, e.value, newTable[j]);
             }
         }
         table = newTable;
@@ -90,7 +90,51 @@ class CustomHashTable implements java.io.Serializable {
         s.defaultReadObject();
         int n = s.readInt();
         for (int i = 0; i < n; ++i){
-            add(s.readObject());
+            add(s.readObject(), null);
         }
+    }
+
+    // a different method for returning a bussiness object from the hashtable
+    public Business getBusiness(Object key){
+        int h = key.hashCode();
+        int i = h & (table.length - 1);
+        for (Node e = table[i]; e != null; e = e.next) {
+            if (key.equals(e.key))
+            return e.value;
+        }
+        return null;
+    }
+
+    // a method for returning a bussiness object from the hashtable
+    public Business get(Object key) {
+        int h = key.hashCode();
+        int i = h & (table.length - 1);
+        for (Node e = table[i]; e != null; e = e.next) {
+            System.out.println(key);
+            System.out.println(e.key);
+            String key1 = (String) key;
+            String key2 = (String) e.key;
+            System.out.println(key1.equals(key2));
+            System.out.println(e.value);
+            if (key1.equals(key2)) {
+                return (Business) e.value;
+            }
+        }
+        return null;
+    }
+
+    // A method for printing all the business names and their reviews
+    public void printAllBusinesses() {
+        for (int i = 0; i < table.length; ++i) {
+            for (Node e = table[i]; e != null; e = e.next) {
+                if (e.value != null) {
+                    System.out.println(e.value.getName() + " " + e.value.getReviewCount());
+                }
+            }
+        }
+    }
+    // getCount method for getting the number of businesses in the hashtable
+    public int getCount(){
+        return size;
     }
 }
