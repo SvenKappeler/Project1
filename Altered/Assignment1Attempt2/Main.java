@@ -18,6 +18,8 @@ public class Main {
         DataStorage.addReviewToBusiness(businesses);
         System.out.println("Done with the Reviews Merge");
 
+        businesses.scoreBusinesses();
+        System.out.println("Done with the Scoring");
 
         System.out.println("Done");
 

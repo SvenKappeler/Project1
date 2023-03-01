@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-class CustomHashTable implements java.io.Serializable {
+class CustomHashTableTDIDF implements java.io.Serializable {
 
     static final class Node {
 	    Object key;
