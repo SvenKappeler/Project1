@@ -135,9 +135,10 @@ class CustomHashTable implements java.io.Serializable {
 
 
     public void scoreBusinesses() {
-        int reviewCount = 0;
+        double reviewCount = 0;
         double stars = 0;
-        int keywordCountTotal = 0;
+        double keywordCountTotal = 0;
+        double overallScore = 0;
         int[] keywordSorter = new int[24];
         String[] keywordKey = new String[] {"Delicious", "Tasty", "Fast", "Clean", "Yummy", "Amazing", "Yum", "Fresh", "Perfect", "Great", "Excellent", "Professional", "Perfectly", "Fantastic", "Modern", "Romantic", "Impeccable", "Incredible", "Delightful", "Extraordinary", "Thrilled", "Loved", "Reasonable"};
         String stringCheck = "";
@@ -147,9 +148,11 @@ class CustomHashTable implements java.io.Serializable {
             for (Node e = table[i]; e != null; e = e.next) {
                 if (e.value != null) {
                     reviewCount = e.value.getReviewCount();
+                    // System.out.println("The review count total is: " + reviewCount);
                     stars = e.value.getStars();
-                    System.out.println("Review Text Here: " + e.value.getReviews());
-                    String[] tokenedString = (e.value.getReviews()).split("\\s");
+                    // System.out.println("The star count is: " + stars);
+                    // System.out.println("Review Text Here: " + e.value.getReviews());
+                    String[] tokenedString = (e.value.getReviews()).split("[,|\\s|\\(|\\)|?|.|!]");
 
                     for(int g = 0; g < tokenedString.length; g++){
                         stringCheck = tokenedString[g];
@@ -223,12 +226,6 @@ class CustomHashTable implements java.io.Serializable {
                             else if(stringCheck.equalsIgnoreCase("Reasonable")){
                                 keywordSorter[22] ++;
                             }
-                            else
-                            {
-                                System.out.println("No Match");
-                            }
-                            
-                            
                         }
                     }
                     
@@ -245,7 +242,14 @@ class CustomHashTable implements java.io.Serializable {
                             maxIndex = k;
                         }
                     }
-                    topThreeKeywords [0] = keywordKey[maxIndex];
+
+                    if( max != 0){
+                        topThreeKeywords [0] = keywordKey[maxIndex];
+                    }
+                    else{
+                        topThreeKeywords [0] = "Clean";
+                    }
+
                     keywordSorter[maxIndex] = 0;
 
                     max = keywordSorter[0];
@@ -256,6 +260,13 @@ class CustomHashTable implements java.io.Serializable {
                             max = keywordSorter[f];
                             maxIndex = f;
                         }
+                    }
+
+                    if( max != 0){
+                        topThreeKeywords [1] = keywordKey[maxIndex];
+                    }
+                    else{
+                        topThreeKeywords [1] = "Fast";
                     }
 
                     topThreeKeywords [1] = keywordKey[maxIndex];
@@ -271,14 +282,28 @@ class CustomHashTable implements java.io.Serializable {
                         }
                     }
 
-                    topThreeKeywords [2] = keywordKey[maxIndex];
+                    if( max != 0){
+                        topThreeKeywords [2] = keywordKey[maxIndex];
+                    }
+                    else{
+                        topThreeKeywords [2] = "Great";
+                    }
+
                     keywordSorter[maxIndex] = 0;
 
+                    overallScore = stars * ((1/reviewCount) * keywordCountTotal);
+
+                    System.out.println("Business Name: " + e.value.getName());
                     System.out.println("The top three keywords for this business are: " + topThreeKeywords[0] + ", " + topThreeKeywords[1] + ", " + topThreeKeywords[2] + ".");
+                    System.out.println("Review Count: " + reviewCount + " || Stars: " + stars + " || Keyword Count Total: " + keywordCountTotal);
+                    System.out.println("The overall score for this business is: " + overallScore);
+
 
                     topThreeKeywords[0] = "";
                     topThreeKeywords[1] = "";
                     topThreeKeywords[2] = "";
+
+                    keywordCountTotal = 0;
                     
                     for(int n = 0; n < 24; n++){
                         keywordSorter[n] = 0;
@@ -298,5 +323,3 @@ class CustomHashTable implements java.io.Serializable {
     }
 
 }
-
-
