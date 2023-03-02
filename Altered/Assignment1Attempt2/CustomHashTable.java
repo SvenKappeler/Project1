@@ -123,7 +123,7 @@ class CustomHashTable implements java.io.Serializable {
         for (int i = 0; i < table.length; ++i) {
             for (Node e = table[i]; e != null; e = e.next) {
                 if (e.value != null) {
-                    System.out.println(e.value.getName() + " " + e.value.getReviewCount() + " " + e.value.getStars());
+                    System.out.println(" " + e.value.getName() + " " + e.value.getReviewCount() + " " + e.value.getStars() + " Latitude: " + e.value.getLatitude() + " Longitude: " + e.value.getLongitude());
                 }
             }
         }
@@ -293,11 +293,13 @@ class CustomHashTable implements java.io.Serializable {
 
                     overallScore = stars * ((1/reviewCount) * keywordCountTotal);
 
-                    System.out.println("Business Name: " + e.value.getName());
-                    System.out.println("The top three keywords for this business are: " + topThreeKeywords[0] + ", " + topThreeKeywords[1] + ", " + topThreeKeywords[2] + ".");
-                    System.out.println("Review Count: " + reviewCount + " || Stars: " + stars + " || Keyword Count Total: " + keywordCountTotal);
-                    System.out.println("The overall score for this business is: " + overallScore);
+                    e.value.setKeyWords(topThreeKeywords[0], topThreeKeywords[1], topThreeKeywords[2]);
+                    e.value.setScore(overallScore);
 
+                    System.out.println("Business Name: " + e.value.getName());
+                    System.out.println("The top three keywords for this business are: " + e.value.getKeywordOne() + ", " + e.value.getKeywordTwo() + ", " + e.value.getKeywordThree() + ".");
+                    System.out.println("Review Count: " + reviewCount + " || Stars: " + stars + " || Keyword Count Total: " + keywordCountTotal);
+                    System.out.println("The overall score for this business is: " + e.value.getScore());
 
                     topThreeKeywords[0] = "";
                     topThreeKeywords[1] = "";
@@ -312,6 +314,163 @@ class CustomHashTable implements java.io.Serializable {
                 }
             }
         }
+    }
+
+    public Business locateClosestBusinesses(double latitudeInput, double longitudeInput)
+    {
+        Business returnValue = new Business();
+        double latitudeTracker = 99999;
+        double longitudeTracker = 99999;
+        double differenceLongitude = 99999;
+        double differenceLatitude = 99999;
+        double totalDifference = 99999;
+        double totalDifferenceTracker = 99999;
+        for(int i = 0; i < table.length; i++) {
+            for (Node e = table[i]; e != null; e = e.next) {
+                if (e.value != null) {
+                    latitudeTracker = e.value.getLatitude();
+                    longitudeTracker = e.value.getLongitude();
+                    if(((latitudeInput <= 0) && (latitudeTracker <= 0)) || ((latitudeInput > 0) && (latitudeTracker > 0))){
+                        if(((longitudeInput <= 0) && (longitudeTracker <= 0)) || ((longitudeInput > 0) && (longitudeTracker > 0))){
+                            if(longitudeInput < longitudeTracker){
+                                differenceLongitude = java.lang.Math.abs(longitudeTracker - longitudeInput);
+                            }
+                            else{
+                                differenceLongitude = java.lang.Math.abs(longitudeInput - longitudeTracker);
+                            }
+                            if(latitudeInput < latitudeTracker){
+                                differenceLatitude = java.lang.Math.abs(latitudeTracker - latitudeInput);
+                            }
+                            else{
+                                differenceLatitude = java.lang.Math.abs(latitudeInput - latitudeTracker);
+                            }
+                            totalDifference = differenceLatitude + differenceLongitude;
+                            if(totalDifferenceTracker > totalDifference)
+                            {
+                                returnValue.setBusinessId(e.value.getBusinessId());
+                                returnValue.setName(e.value.getName());
+                                returnValue.setLongitude(e.value.getLongitude());
+                                returnValue.setLatitude(e.value.getLatitude());
+                                returnValue.setStars(e.value.getStars());
+                                returnValue.setReviews(e.value.getReviews());
+                                returnValue.setReviewCount(e.value.getReviewCount());
+                                returnValue.setScore(e.value.getScore());
+                                returnValue.setKeyWords(e.value.getKeywordOne(), e.value.getKeywordTwo(), e.value.getKeywordThree());
+                                totalDifferenceTracker = totalDifference;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("The closest lat and long is Lat: " + returnValue.getLatitude() + " Long: " + returnValue.getLongitude());
+        return returnValue;
+    }
+
+    public Business locateSecondClosestBusiness(String firstBusiness, double latitudeInput, double longitudeInput)
+    {
+        Business returnValue = new Business();
+        double latitudeTracker = 99999;
+        double longitudeTracker = 99999;
+        double differenceLongitude = 99999;
+        double differenceLatitude = 99999;
+        double totalDifference = 99999;
+        double totalDifferenceTracker = 99999;
+        for(int i = 0; i < table.length; i++) {
+            for (Node e = table[i]; e != null; e = e.next) {
+                if (e.value != null) {
+                    if (!(e.value.getName().equalsIgnoreCase(firstBusiness))){
+                        latitudeTracker = e.value.getLatitude();
+                        longitudeTracker = e.value.getLongitude();
+                        if(((latitudeInput <= 0) && (latitudeTracker <= 0)) || ((latitudeInput > 0) && (latitudeTracker > 0))){
+                            if(((longitudeInput <= 0) && (longitudeTracker <= 0)) || ((longitudeInput > 0) && (longitudeTracker > 0))){
+                                if(longitudeInput < longitudeTracker){
+                                    differenceLongitude = java.lang.Math.abs(longitudeTracker - longitudeInput);
+                                }
+                                else{
+                                    differenceLongitude = java.lang.Math.abs(longitudeInput - longitudeTracker);
+                                }
+                                if(latitudeInput < latitudeTracker){
+                                    differenceLatitude = java.lang.Math.abs(latitudeTracker - latitudeInput);
+                                }
+                                else{
+                                    differenceLatitude = java.lang.Math.abs(latitudeInput - latitudeTracker);
+                                }
+                                totalDifference = differenceLatitude + differenceLongitude;
+                                if(totalDifferenceTracker > totalDifference)
+                                {
+                                    returnValue.setBusinessId(e.value.getBusinessId());
+                                    returnValue.setName(e.value.getName());
+                                    returnValue.setLongitude(e.value.getLongitude());
+                                    returnValue.setLatitude(e.value.getLatitude());
+                                    returnValue.setStars(e.value.getStars());
+                                    returnValue.setReviews(e.value.getReviews());
+                                    returnValue.setReviewCount(e.value.getReviewCount());
+                                    returnValue.setScore(e.value.getScore());
+                                    returnValue.setKeyWords(e.value.getKeywordOne(), e.value.getKeywordTwo(), e.value.getKeywordThree());
+                                    totalDifferenceTracker = totalDifference;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("The closest lat and long is Lat: " + returnValue.getLatitude() + " Long: " + returnValue.getLongitude());
+        return returnValue;
+    }
+
+    public Business locateThirdClosestBusinesses(String firstBusiness, String secondBusiness, double latitudeInput, double longitudeInput)
+    {
+        Business returnValue = new Business();
+        double latitudeTracker = 99999;
+        double longitudeTracker = 99999;
+        double differenceLongitude = 99999;
+        double differenceLatitude = 99999;
+        double totalDifference = 99999;
+        double totalDifferenceTracker = 99999;
+        for(int i = 0; i < table.length; i++) {
+            for (Node e = table[i]; e != null; e = e.next) {
+                if (e.value != null) {
+                    if (!(e.value.getName().equalsIgnoreCase(firstBusiness)) && !(e.value.getName().equalsIgnoreCase(secondBusiness))){
+                        latitudeTracker = e.value.getLatitude();
+                        longitudeTracker = e.value.getLongitude();
+                        if(((latitudeInput <= 0) && (latitudeTracker <= 0)) || ((latitudeInput > 0) && (latitudeTracker > 0))){
+                            if(((longitudeInput <= 0) && (longitudeTracker <= 0)) || ((longitudeInput > 0) && (longitudeTracker > 0))){
+                                if(longitudeInput < longitudeTracker){
+                                    differenceLongitude = java.lang.Math.abs(longitudeTracker - longitudeInput);
+                                }
+                                else{
+                                    differenceLongitude = java.lang.Math.abs(longitudeInput - longitudeTracker);
+                                }
+                                if(latitudeInput < latitudeTracker){
+                                    differenceLatitude = java.lang.Math.abs(latitudeTracker - latitudeInput);
+                                }
+                                else{
+                                    differenceLatitude = java.lang.Math.abs(latitudeInput - latitudeTracker);
+                                }
+                                totalDifference = differenceLatitude + differenceLongitude;
+                                if(totalDifferenceTracker > totalDifference)
+                                {
+                                    returnValue.setBusinessId(e.value.getBusinessId());
+                                    returnValue.setName(e.value.getName());
+                                    returnValue.setLongitude(e.value.getLongitude());
+                                    returnValue.setLatitude(e.value.getLatitude());
+                                    returnValue.setStars(e.value.getStars());
+                                    returnValue.setReviews(e.value.getReviews());
+                                    returnValue.setReviewCount(e.value.getReviewCount());
+                                    returnValue.setScore(e.value.getScore());
+                                    returnValue.setKeyWords(e.value.getKeywordOne(), e.value.getKeywordTwo(), e.value.getKeywordThree());
+                                    totalDifferenceTracker = totalDifference;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("The closest lat and long is Lat: " + returnValue.getLatitude() + " Long: " + returnValue.getLongitude());
+        return returnValue;
     }
 
     public void keywordCounter() {
