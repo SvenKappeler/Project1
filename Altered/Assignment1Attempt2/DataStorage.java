@@ -11,7 +11,7 @@ public class DataStorage {
 
     public static void parseBusinessesJSON(CustomHashTable businesses) throws JsonSyntaxException, IOException{
         // Parse information 
-        String filename = "yelp_academic_dataset_business.json";
+        String filename = "/Users/svenkappeler/Downloads/yelp_dataset/yelp_academic_dataset_business.json";
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             int restaurantCounter = 0;
@@ -50,7 +50,7 @@ public class DataStorage {
 
     public static void addReviewToBusiness(CustomHashTable businesses) throws FileNotFoundException, IOException{
         // for each business
-        String filename = "yelp_academic_dataset_review.json";
+        String filename = "/Users/svenkappeler/Downloads/yelp_dataset/yelp_academic_dataset_review.json";
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             

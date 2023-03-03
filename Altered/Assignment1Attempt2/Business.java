@@ -130,4 +130,8 @@ public class Business {
         coordinates[1] = latitude;
         return coordinates;
     }
+
+    public String getKeywords(){
+        return firstKeyword + " " + secondKeyword + " " + thirdKeyword;
+    }
 }

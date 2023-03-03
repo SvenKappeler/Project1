@@ -363,7 +363,7 @@ class CustomHashTable implements java.io.Serializable {
                 }
             }
         }
-        System.out.println("The closest lat and long is Lat: " + returnValue.getLatitude() + " Long: " + returnValue.getLongitude());
+        //System.out.println("The closest lat and long is Lat: " + returnValue.getLatitude() + " Long: " + returnValue.getLongitude());
         return returnValue;
     }
 
@@ -461,6 +461,7 @@ class CustomHashTable implements java.io.Serializable {
                                     returnValue.setReviewCount(e.value.getReviewCount());
                                     returnValue.setScore(e.value.getScore());
                                     returnValue.setKeyWords(e.value.getKeywordOne(), e.value.getKeywordTwo(), e.value.getKeywordThree());
+                                
                                     totalDifferenceTracker = totalDifference;
                                 }
                             }
@@ -469,7 +470,7 @@ class CustomHashTable implements java.io.Serializable {
                 }
             }
         }
-        System.out.println("The closest lat and long is Lat: " + returnValue.getLatitude() + " Long: " + returnValue.getLongitude());
+        //System.out.println("The closest lat and long is Lat: " + returnValue.getLatitude() + " Long: " + returnValue.getLongitude());
         return returnValue;
     }
 
