@@ -37,7 +37,7 @@ public class GUI extends JFrame {
     public GUI(CustomHashTable businesses) {
         super("GUI");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 800);
+        setSize(800, 200);
         this.businesses = businesses;
 
 
@@ -76,16 +76,18 @@ public class GUI extends JFrame {
         c.gridy = 2;
         c.gridwidth = 1;
         c.weighty = 0.0;
-        mainPanel.add(restaurantLabel, c);
-        c.gridx = 1;
-        mainPanel.add(keywordLabel, c);
         c.gridx = 0;
-        c.gridy = 3;
-        c.gridwidth = 2;
-        c.weighty = 1.0;
+        c.gridwidth = 1;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0.5;
         mainPanel.add(new JScrollPane(restaurantTextArea), c);
         c.gridx = 1;
+        c.insets = new Insets(5, 10, 5, 10);
         mainPanel.add(new JScrollPane(keywordTextArea), c);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
+        c.weightx = 0.5;
+
         add(mainPanel);
 
         setVisible(true);
@@ -153,7 +155,6 @@ public class GUI extends JFrame {
                 String latitude = firstResult.get("lat").getAsString();
                 String longitude = firstResult.get("lon").getAsString();
 
-                businesses.scoreBusinesses();
 
                 Business outputOne = new Business();
                 Business outputTwo = new Business();
@@ -162,6 +163,8 @@ public class GUI extends JFrame {
                 Double latitudeDouble = Double.parseDouble(latitude);
                 Double longitudeDouble = Double.parseDouble(longitude);
         
+
+                
         
                 outputOne = businesses.locateClosestBusinesses(latitudeDouble, longitudeDouble);
                 outputTwo = businesses.locateSecondClosestBusiness(outputOne.getName(), latitudeDouble, longitudeDouble);

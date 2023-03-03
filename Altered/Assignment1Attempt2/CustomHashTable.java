@@ -144,7 +144,7 @@ class CustomHashTable implements java.io.Serializable {
         String stringCheck = "";
         String keywords = "Delicious delicious Tasty tasty Fast fast Clean clean Yummy yummy Amazing amazing Yum yum Fresh fresh Perfect perfect Great great Excellent excellent Professional professional Perfectly perfectly Fantastic fantastic Modern modern Romantic romantic Impeccable impeccable Incredible incredible Delightful delightful Extraordinary extraordinary Thrilled thrilled Loved loved Reasonable reasonable";
         String[] topThreeKeywords = new String[] {"Error", "Error", "Error"};
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < table.length; ++i) {
             for (Node e = table[i]; e != null; e = e.next) {
                 if (e.value != null) {
                     reviewCount = e.value.getReviewCount();
@@ -294,6 +294,7 @@ class CustomHashTable implements java.io.Serializable {
                     overallScore = stars * ((1/reviewCount) * keywordCountTotal);
 
                     e.value.setKeyWords(topThreeKeywords[0], topThreeKeywords[1], topThreeKeywords[2]);
+                    //System.out.e.value.getKeywords()
                     e.value.setScore(overallScore);
 
                     System.out.println("Business Name: " + e.value.getName());
@@ -480,6 +481,16 @@ class CustomHashTable implements java.io.Serializable {
 
     public int businessScorer() {
         return 0;
+    }
+
+    public void printKeywords() {
+        for (int i = 0; i < table.length; i++) {
+            System.out.print("[" + i + "]");
+            for (Node e = table[i]; e != null; e = e.next) {
+                System.out.print(" -> " + e.value.getKeywords());
+            }
+            System.out.println();
+        }
     }
 
 }

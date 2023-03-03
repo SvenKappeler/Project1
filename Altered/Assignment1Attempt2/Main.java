@@ -17,9 +17,12 @@ public class Main {
         DataStorage.addReviewToBusiness(businesses);
         System.out.println("Done with the Reviews Merge");
 
-
-    
+        // Add keywords to the businesses
+        businesses.scoreBusinesses();
         System.out.println("Done with the Scoring");
+
+        //businesses.printKeywords();
+
 
         new GUI(businesses);
 
